@@ -25,7 +25,6 @@ def decrypt(iv, c):
     m = [-1] * block_size
     # decrypt c from end to beginning
     for decrypt_idx in range(block_size-1, -1, -1):
-        print "decrypt_idx", decrypt_idx
         new_iv = iv[:]
         num_padding_bytes = block_size - decrypt_idx
         # modify the IV so that the bytes after the one we're processing
@@ -85,10 +84,11 @@ Oracle_Connect()
 
 m_lst = []
 # iterate over consecutive pairs of ciphertext blocks
-for iv, c in zip(c_lst[:-1], c_lst[1:]):
+for block_num, (iv, c) in enumerate(zip(c_lst[:-1], c_lst[1:])):
+    print "Decrypting block", block_num + 1
     m_lst.append(decrypt(iv, c))
 
 m_lst[-1] = remove_padding(m_lst[-1])
-flattenend_m = [byte for block in m_lst for byte in block]
+flattened_m = [byte for block in m_lst for byte in block]
 message = bytes_to_string(flattened_m)
 print message
