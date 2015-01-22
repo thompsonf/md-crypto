@@ -47,7 +47,7 @@ def Mac(message, mlength):
 # Packet Structure: < mlength(1) || message(mlength) || tag(16) || null-terminator(1) >
 def Vrfy(message, mlength, tag):
     if not mac_sock or not vrfy_sock:
-        print "[WARNING]: You haven't conected to the server yet."
+        print "[WARNING]: You haven't connected to the server yet."
         return -1
 
     out = bytearray(message[:])
